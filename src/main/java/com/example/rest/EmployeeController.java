@@ -76,7 +76,9 @@ public class EmployeeController {
     // Add an employee
     @RequestMapping(method = POST)
     public ResponseEntity add(@RequestBody Employee employee) {
-        if (eDao.add(employee)) {
+        final boolean wasOperationSuccessful = eDao.add(employee);
+
+        if (wasOperationSuccessful) {
             return new ResponseEntity<>(null, CREATED);
         } else {
             return new ResponseEntity<>(null, INTERNAL_SERVER_ERROR);
@@ -86,8 +88,9 @@ public class EmployeeController {
     // Update an employee
     @RequestMapping(method = PUT, value = "{id}")
     public ResponseEntity update(@PathVariable long id, @RequestBody Employee employee) {
+        final boolean wasOperationSuccessful = eDao.update(id, employee);
 
-        if (eDao.update(id, employee)) {
+        if (wasOperationSuccessful) {
             return new ResponseEntity<>(null, OK);
         } else {
             return new ResponseEntity<>(null, NOT_FOUND);
@@ -95,4 +98,14 @@ public class EmployeeController {
     }
 
     // Delete a employee (Week 3)
+    @RequestMapping(method = DELETE, value = "{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        final boolean wasOperationSuccessful = eDao.delete(id);
+
+        if (wasOperationSuccessful) {
+            return new ResponseEntity(null, OK);
+        } else {
+            return new ResponseEntity<>(null, INTERNAL_SERVER_ERROR);
+        }
+    }
 }

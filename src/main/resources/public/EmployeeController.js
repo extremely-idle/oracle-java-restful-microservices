@@ -1,7 +1,7 @@
 var app = angular.module('demo', [])
 
 .controller('Employees', function($scope, $http) {
-	$scope.urlService = "/employees";
+	$scope.urlService = "http://localhost:8090/employees";
 	$scope.showListEmployes = true;
 	$scope.showPhoto = false;
 	$scope.photo = false;
